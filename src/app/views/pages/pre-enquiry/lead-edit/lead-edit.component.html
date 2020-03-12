@@ -1,0 +1,145 @@
+<div class="kt-portlet">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<form class="kt-form" [formGroup]="leadEditForm">
+		<div class="kt-portlet__body">
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true"
+				(close)="onAlertClose($event)">
+				Oh snap! Change a few things up and try submitting again.
+			</kt-alert>
+
+			<div class="form-group kt-form__group row">
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter First Name" formControlName="firstName" />
+						<mat-error>First Name is
+							<strong>required</strong>
+						</mat-error>
+						<mat-hint align="start">Please enter
+							<strong>First Name</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter Last Name" formControlName="lastName" />
+						<mat-error>Last Name is
+							<strong>required</strong>
+						</mat-error>
+						<mat-hint align="start">Please enter
+							<strong>Last Name</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="kt-separator kt-separator--dashed"></div>
+
+			<div class="form-group kt-form__group row">
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Mobile Number" formControlName="mobileNumber" />
+						<mat-error>Mobile Number is
+							<strong>required</strong>
+						</mat-error>
+						<mat-hint align="start">Please enter
+							<strong>Mobile Number</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Alternate Mobile Number" formControlName="alternateNumber" />
+						<mat-hint align="start">please enter
+							<strong>Alternate Mobile Number</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+			</div>
+
+			<div class="kt-separator kt-separator--dashed"></div>
+
+			<div class="form-group kt-form__group row">
+				<!-- <div class="col-lg kt-margin-bottom-20-mobile">
+					<label for="example-tel-input" class="col-5 col-form-label">Enquiry Segment</label>
+					<div class="col-10">
+						<select class="form-control" id="exampleSelect1" formControlName="enquirySegment" (change) = "changeCustomerTypeValues()">
+							<option selected>Select</option>
+							<option>Personal</option>
+							<option>Commercial</option>
+							<option>Company</option>
+						</select>
+					</div>
+				</div> -->
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<label for="example-tel-input" class="col-2 col-form-label">CustomerType</label>
+					<div class="col-10">
+						<select class="form-control" id="exampleSelect1" formControlName="customerType">
+							<option selected>Select</option>
+							<!-- <option *ngFor="let items of customerTypeDropDown">{{ items.customerType }}</option> -->
+							<option>Individual</option>
+							<option>Customer</option>
+							<option>Corporate</option>
+							<option>Institution</option>
+							<option>Business</option>
+							<option>Fleet</option>
+							<option>Government</option>
+							<option>Farmer</option>
+							<option>Retired</option>
+							<option>Other</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="kt-separator kt-separator--dashed"></div>
+
+			<div class="form-group kt-form__group row">
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<label for="example-tel-input" class="col-2 col-form-label">Model</label>
+					<div class="col-10">
+						<select name="model" class="form-control" formControlName="model">
+							<option selected>Select</option>
+							<option *ngFor="let item of vechileModelsList" [ngValue]="item">{{item}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<label for="example-tel-input" class="col-5 col-form-label">Source Of enquiry </label>
+					<div class="col-5">
+						<select class="form-control" id="exampleSelect1" formControlName="SOE">
+							<option>Select</option>
+							<option>Showroom</option>
+							<option>Field</option>
+							<option>Digital Marketing</option>
+							<option>Event</option>
+							<option>Social Network</option>
+							<option>Reference</option>
+							<option>Website</option>
+							<option>App</option>
+							<option>NewsPaper</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+						<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial
+							matTooltip="Cancel changes">
+							Cancel
+						</button>&nbsp;
+						<button type="button" mat-raised-button color="primary" (click)="onSubmit()"
+							matTooltip="Save changes">
+							Save
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

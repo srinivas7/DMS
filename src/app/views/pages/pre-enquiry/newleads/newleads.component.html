@@ -1,0 +1,176 @@
+<kt-portlet>
+    <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+    <kt-portlet-header [class]="'kt-portlet__head--lg'">
+        <!-- PORTLET LOADING | Binded to TABLE Datasource -->
+
+        <ng-container ktPortletTitle>
+            <h3 class="kt-portlet__head-title">
+                <span>Create Lead</span>
+            </h3>
+            <!-- For localisations we use @ngx-translate | See off. documentations => https://github.com/ngx-translate/core -->
+            <!-- Localization libraries (en/fr) are here => '../../../.././config/i18n/en.ts|fr.ts' -->
+        </ng-container>
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+        <div [hidden]="!message" class="col-sm-4 mx-auto" style="color:red"><br>
+            <p><b>{{ message }}</b></p>
+        </div><br>
+        <form class="col-sm-8 mx-auto" [formGroup]="newleadsFormGroup" *ngIf="!resBody">
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">First Name</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" value="" id="example-text-input"
+                        placeholder="Enter  First Name" formControlName="firstName"
+                        [ngClass]="{ 'is-invalid': hasFormErrors && newleadsFormGroup.controls.firstName.errors }">
+                    <div *ngIf="hasFormErrors && newleadsFormGroup.controls.firstName.errors.required"
+                        class="invalid-feedback">First Name is Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label">Last Name</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" value="" id="example-text-input"
+                        placeholder="Enter  Last Name" formControlName="lastName"
+                        [ngClass]="{ 'is-invalid': hasFormErrors && newleadsFormGroup.controls.lastName.errors }">
+                    <div *ngIf="hasFormErrors && newleadsFormGroup.controls.lastName.errors.required"
+                        class="invalid-feedback">Last Name is Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-tel-input" class="col-2 col-form-label">Mobile Number</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" value="" id="example-tel-input"
+                        placeholder="Enter Mobile Number" formControlName="mobileNumber"
+                        [ngClass]="{ 'is-invalid': hasFormErrors && newleadsFormGroup.controls.mobileNumber.errors }">
+                    <div *ngIf="hasFormErrors && newleadsFormGroup.controls.mobileNumber.errors.required"
+                        class="invalid-feedback">Mobile Number is Required</div>
+                    <div *ngIf="isControlHasError('mobileNumber','maxlength')">Maximum Length 10</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-tel-input" class="col-2 col-form-label">Alternate Mobile Number</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" value="" id="example-tel-input"
+                        placeholder="Enter Alternate Mobile Number" formControlName="alternateNumber">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-tel-input" class="col-2 col-form-label">Model</label>
+                <div class="col-10">
+
+                    <select name="model" class="form-control" formControlName="model"
+                        [ngClass]="{ 'is-invalid': hasFormErrors && newleadsFormGroup.controls.model.errors }">
+                        <option selected>Select</option>
+                        <option *ngFor="let item of vechileModelsList" [ngValue]="item">{{item.model}}</option>
+                    </select>
+                    <div *ngIf="hasFormErrors && newleadsFormGroup.controls.model.errors.required"
+                        class="invalid-feedback">Model is Required</div>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label for="example-tel-input" class="col-2 col-form-label">Enquiry Segment</label>
+                <div class="col-10">
+                    <select name="segment" formControlName="enquirySegment" class="form-control" (change) = "changeCustomerTypeValues()">
+                        <option selected>Select</option>
+                        <option>Personal</option>
+                        <option>Commercial</option>
+                        <option>Company</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-tel-input" class="col-2 col-form-label">Customer Type</label>
+                <div class="col-10">
+                    <select class="form-control" id="exampleSelect1" formControlName="customerType">
+                        <option selected>Select</option>
+                        <option *ngFor="let items of customerTypeDropDown">{{ items.customerType }}</option>
+                        <!-- <option>Individual Customer</option>
+                        <option>Corporate</option>
+                        <option>Institution</option>
+                        <option>Business</option>
+                        <option>Fleet</option>
+                        <option>Govt</option>
+                        <option>Farmer</option>
+                        <option>Retired</option>
+                        <option>Other</option> -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-tel-input" class="col-2 col-form-label">Source Of enquiry </label>
+                <div class="col-10">
+                    <select class="form-control" id="exampleSelect1" formControlName="SOE">
+                        <option selected>Select</option>
+                        <option>Showroom</option>
+                        <option>Field</option>
+                        <option>Digital Marketing</option>
+                        <option>Event</option>
+                        <option>Social Network</option>
+                        <option>Reference</option>
+                        <option>Website</option>
+                        <option>App</option>
+                        <option>NewsPaper</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label class="col-sm-4" style="margin-right: -30px;">Allocate DSE / Sales Excutive</label>
+                <div class="col-sm-8">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <label class="form-check-label" for="exampleCheck1"> </label>
+                            <input class="form-check-input" type="checkbox" formControlName="dse">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row  offset-4">
+                <button type="reset" (click)="onReset()" class="btn btn-primary "
+                    style="margin-right: 20px;">Reset</button>
+                <button type="button" class="btn btn-primary" (click)="sendCustData()">Submit</button>
+            </div>
+        </form>
+        <div class="col-sm-8 mx-auto" *ngIf="resBody">
+            <div class="form-group row  offset-3">
+                <label><b style="margin-right: 30px;">First Name : </b> {{ this.lead['firstName'] }}</label>
+            </div>
+            <div class="form-group row  offset-3">
+                <label><b style="margin-right: 30px;">Last Name : </b> {{ this.lead['lastName'] }}</label>
+            </div>
+            <div class="form-group row  offset-3">
+                <label><b style="margin-right: 30px;">Mobile : </b> {{ this.lead['mobileNumber'] }}</label>
+            </div>
+
+
+            <div class="form-group row  offset-3">
+                <label><b style="margin-right: 30px;">Model : </b> <span
+                        *ngIf="this.lead['enquiryDetails'][0]">{{ this.lead['enquiryDetails'][0]['model'] }}</span></label>
+            </div>
+            <div class="form-group row  offset-3" *ngIf="!checkAllocation">
+                <label><b style="margin-right: 30px;">DSE Allocation : </b> <span
+                        *ngFor="let dseLead of this.lead['dseCustomerMappings']">{{ dseLead.dscName }}</span></label>
+            </div>
+            <div class="form-group row  offset-3" *ngIf="checkAllocation">
+                <label><b style="margin-right: 30px;">DSE Allocation : </b><span
+                        *ngFor="let dseLead of this.dseName['dseCustomerMappings']">{{ dseLead.dscName }}</span></label>
+            </div>
+        </div>
+        <div class="form-group row  offset-4" *ngIf="checkDSE">
+            <button type="button" (click)="onReset()" class="btn btn-primary" style="margin-right: 20px;"
+                *ngIf="!afterAllocateDSE">No
+                Thanks!</button>
+            <button type="button" (click)="allocatedDSE(this.lead['id'])" class="btn btn-primary "
+                *ngIf="!afterAllocateDSE">Allocate
+                DSE</button>
+            <button type="button" (click)="routelead()" class="btn btn-primary" style="margin-right: 20px;"
+                *ngIf="afterAllocateDSE">ok</button>
+            <button type="button" (click)="getRowData(this.lead['id'])" class="btn btn-primary"
+                style="margin-right: 20px;" *ngIf="afterAllocateDSE">Proceed to Enquiry</button>
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+
+</kt-portlet>

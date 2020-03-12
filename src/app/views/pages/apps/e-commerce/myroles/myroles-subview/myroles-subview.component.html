@@ -1,0 +1,308 @@
+<kt-portlet>
+	<!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+	<kt-portlet-header [class]="'kt-portlet__head--lg'">
+		<!-- PORTLET LOADING | Binded to TABLE Datasource -->
+
+		<ng-container ktPortletTitle>
+			<h3 class="kt-portlet__head-title">
+				<span>My Role</span>
+			</h3>
+			<!-- For localisations we use @ngx-translate | See off. documentations => https://github.com/ngx-translate/core -->
+			<!-- Localization libraries (en/fr) are here => '../../../.././config/i18n/en.ts|fr.ts' -->
+		</ng-container>
+
+		<ng-container ktPortletTools>
+			<!-- <button (click)="addMyRole()" mat-raised-button matTooltip="Create new Policy" color="primary" type="button">
+				<span>Create Role</span>
+			</button> -->
+			<!-- Buttons (Material Angular) | See off.documenations 'https://material.angular.io/components/button/overview' -->
+			<!-- mat-raised-button | Rectangular contained button w/ elevation  -->
+		</ng-container>
+	</kt-portlet-header>
+	<!-- end::Header -->
+
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form kt-margin-b-30">
+			<!-- start::FILTERS -->
+			<!--<div class="kt-form__filtration">
+				<div class="row align-items-center">
+
+					<div class="col-md-2 kt-margin-bottom-10-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="Search myrole" #searchInput placeholder="Search">
+							<mat-hint align="start">
+								<strong>Search</strong> in all fields
+							</mat-hint>
+						</mat-form-field>
+					</div>
+
+				</div>
+			</div>-->
+			<!-- end::FILTERS -->
+
+			<!-- start::GROUP ACTIONS -->
+			<!-- Group actions list: 'Delete selected' | 'Fetch selected' | 'Update status for selected' -->
+			<!-- Group actions are shared for all LISTS | See '../../_shared' folder -->
+			<div class="row align-items-center collapse kt-form__group-actions kt-margin-top-20 kt-margin-bottom-20"
+				[ngClass]="{'show' : selection.selected.length > 0}"><!-- We show 'Group Actions' div if smth are selected -->
+				<div class="col-xl-12">
+					<div class="kt-form__group kt-form__group--inline">
+						<div class="kt-form__label kt-form__label-no-wrap">
+							<label class="kt--font-bold kt-font-danger-">
+								<span></span> {{ selection.selected.length }}
+							</label>
+							<!-- selectedCountsTitle => function from codeBehind (myrole-list.component.ts file) -->
+							<!-- selectedCountsTitle => just returns title of selected items count -->
+							<!-- for example: Selected records count: 4 -->
+						</div>
+						<div class="kt-form__control kt-form__group--inline">
+							<ng-template ngxPermissionsOnly="canDeleteECommerceData">
+								<!-- <button (click)="deleteMyRoles()"
+									mat-raised-button
+									color="accent"
+									matTooltip="Delete selected policies" 
+									class="mat-button-mt-4">
+									<mat-icon>delete</mat-icon>
+									Delete All
+								</button>&nbsp; --><!-- Call 'delete-entity-dialog' from _shared folder -->
+							</ng-template>
+
+							<button (click)="fetchMyRoles()" mat-raised-button matTooltip="Fetch selected policies" class="mat-button-mt-4">
+								<mat-icon>clear_all</mat-icon>
+								Fetch Selected
+							</button>&nbsp;<!-- Call 'fetch-entity-dialog' from _shared folder -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end::GROUP ACTIONS -->
+		</div>
+        <!-- end::FILTERS & GROUP ACTIONS -->
+        
+        <div>
+			<p><b>Role Name :</b>  {{ selectedRole?.role_name }}</p>
+			<p><b>Created By :</b> {{ selectedRole?.createdBy }} </p>
+            <p><b>Description :</b>  {{ selectedRole?.description }}</p>
+            <p><b>Created Date :</b> {{ selectedRole?.creationDate | date : 'mediumDate' }} </p>
+		</div><br>
+		<div>
+			<p><b>Mapped Employees</b></p>
+		</div>
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8"
+				#table
+				[dataSource]="empData"
+				matSort
+				#sort1="matSort"
+				matSortActive="id"
+				matSortDirection="asc"
+				matSortDisableClear>
+				<!-- Checkbox Column -->
+
+				<!-- Table with selection -->
+				<!-- https://run.stackblitz.com/api/angular/v1?file=app%2Ftable-selection-example.ts -->
+				<ng-container matColumnDef="select">
+					<mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+						<mat-checkbox (change)="$event ? masterToggle() : null"
+							[checked]="selection.hasValue() && isAllSelected()"
+							[indeterminate]="selection.hasValue() && !isAllSelected()"
+							[color]="'primary'">
+						</mat-checkbox>
+					</mat-header-cell>
+					<mat-cell *matCellDef="let row" class="mat-column-checkbox">
+						<mat-checkbox (click)="$event.stopPropagation()"
+							(change)="$event ? selection.toggle(row) : null"
+							[checked]="selection.isSelected(row)"
+							[color]="'primary'">
+						</mat-checkbox>
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="empid">
+					<!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Employee Id</mat-header-cell>
+					<mat-cell *matCellDef="let emp">{{emp.empid}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="empname">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</mat-header-cell>
+					<mat-cell *matCellDef="let emp">{{emp.empName}}</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="designation">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Employee Designation</mat-header-cell>
+					<mat-cell *matCellDef="let emp">{{emp.designation}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+					<mat-cell *matCellDef="let myrole">
+						<!--   <ng-template ngxPermissionsOnly="canEditECommerceData">
+							<button mat-icon-button color="primary" matTooltip="Edit Policy" (click)="editMyRole(myrole)">
+								<mat-icon>create</mat-icon>
+							</button>&nbsp;
+						</ng-template>  --><!-- Change when Api Completes -->
+						<!-- <button mat-icon-button color="primary" matTooltip="Edit Policy" (click)="editMyRole(myrole)">
+							<mat-icon>create</mat-icon>
+						</button>&nbsp; -->
+
+						<!--  <ng-template ngxPermissionsOnly="canDeleteECommerceData">
+							<button mat-icon-button
+								color="warn"
+								matTooltip="Delete Policy"
+								type="button"
+								(click)="deleteMyRole(myrole)">
+								<mat-icon>delete</mat-icon>
+							</button>&nbsp;
+						</ng-template>  --><!-- Change when Api Completes -->
+						<button mat-icon-button
+							color="warn"
+							matTooltip="Delete Employee"
+							type="button"
+							(click)="unMapEmployee(myrole.empid)">
+							<mat-icon>delete</mat-icon>
+						</button>&nbsp;
+						
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			</mat-table>
+			<!-- Message for empty data  -->
+			<div class="mat-table__message" *ngIf="empData?.length === 0 && isEmpDataLoaded">No records found</div>
+			<div class="mat-table__message" *ngIf="!isEmpDataLoaded">Please wait....</div>
+		</div>
+
+		<!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+			<mat-spinner [diameter]="20" *ngIf="!isEmpDataLoaded"></mat-spinner>
+			<!-- MATERIAL PAGINATOR | Binded to dasources -->
+			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+            <mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="empData?.length" [showFirstLastButtons]="true"></mat-paginator>
+            <button (click)="addEmployeeToRole()" mat-raised-button matTooltip="Add new Emp" color="primary" type="button">
+				<span>Add Employee</span>
+			</button>
+		</div><br><br>
+        <!-- end: BOTTOM -->
+        
+        <div>
+			<p><b>Mapped Policy Groups</b></p>
+        </div>
+
+        <!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+			<mat-table class="lmat-elevation-z8"
+				#table
+				[dataSource]="policyGroup"
+				matSort
+				#sort2="matSort"
+				matSortActive="id"
+				matSortDirection="asc"
+				matSortDisableClear>
+				<!-- Checkbox Column -->
+
+				<!-- Table with selection -->
+				<!-- https://run.stackblitz.com/api/angular/v1?file=app%2Ftable-selection-example.ts -->
+				<ng-container matColumnDef="select">
+					<mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+						<mat-checkbox (change)="$event ? masterToggle() : null"
+							[checked]="selection.hasValue() && isAllSelected()"
+							[indeterminate]="selection.hasValue() && !isAllSelected()"
+							[color]="'primary'">
+						</mat-checkbox>
+					</mat-header-cell>
+					<mat-cell *matCellDef="let row" class="mat-column-checkbox">
+						<mat-checkbox (click)="$event.stopPropagation()"
+							(change)="$event ? selection.toggle(row) : null"
+							[checked]="selection.isSelected(row)"
+							[color]="'primary'">
+						</mat-checkbox>
+					</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="groupid">
+					<!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Group ID</mat-header-cell>
+					<mat-cell *matCellDef="let emp">{{emp.id}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="groupname">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Group Name</mat-header-cell>
+					<mat-cell *matCellDef="let emp">{{emp.groupName}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="displayName">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Display Name</mat-header-cell>
+					<mat-cell *matCellDef="let emp">{{emp.displayName}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="description">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+					<mat-cell *matCellDef="let emp">{{emp.description}}</mat-cell>
+				</ng-container>
+
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+					<mat-cell *matCellDef="let mypolicygroup">
+						<!--   <ng-template ngxPermissionsOnly="canEditECommerceData">
+							<button mat-icon-button color="primary" matTooltip="Edit Policy" (click)="editMyRole(myrole)">
+								<mat-icon>create</mat-icon>
+							</button>&nbsp;
+						</ng-template>  --><!-- Change when Api Completes -->
+						<!-- <button mat-icon-button color="primary" matTooltip="Edit Policy" (click)="editMyRole(myrole)">
+							<mat-icon>create</mat-icon>
+						</button>&nbsp; -->
+
+						<!--  <ng-template ngxPermissionsOnly="canDeleteECommerceData">
+							<button mat-icon-button
+								color="warn"
+								matTooltip="Delete Policy"
+								type="button"
+								(click)="deleteMyRole(myrole)">
+								<mat-icon>delete</mat-icon>
+							</button>&nbsp;
+						</ng-template>  --><!-- Change when Api Completes -->
+						<button mat-icon-button
+							color="warn"
+							matTooltip="Delete PolicyGroup"
+							type="button"
+							(click)="unMapPolicyGroup(mypolicygroup.id)">
+							<mat-icon>delete</mat-icon>
+						</button>&nbsp;
+						
+					</mat-cell>
+				</ng-container>
+
+				<mat-header-row *matHeaderRowDef="displayedColumnsPolicyGroup"></mat-header-row>
+
+				<mat-row *matRowDef="let row; columns: displayedColumnsPolicyGroup"></mat-row>
+			</mat-table>
+			<!-- Message for empty data  -->
+			<div class="mat-table__message" *ngIf="scope.totalElements === 0">No records found</div>
+			<div class="mat-table__message" *ngIf="isLoading">Please wait....</div>
+        </div>
+
+        <!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+			<mat-spinner [diameter]="20" *ngIf="isLoading"></mat-spinner>
+			<!-- MATERIAL PAGINATOR | Binded to dasources -->
+			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+			<!-- <mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="policyGroup?.length" [showFirstLastButtons]="true"></mat-paginator> -->
+			<mat-paginator [pageSize]="scope.size" (page)="paginatorEvents($event)" [pageSizeOptions]="[3, 5, 10]" [length]="scope.totalElements" [showFirstLastButtons]="true"></mat-paginator>
+            <button (click)="addPolicyGroupToRole()" mat-raised-button matTooltip="Add new Policy" color="primary" type="button">
+				<span>Add PolicyGroup</span>
+			</button>
+		</div><br><br>
+        <!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+
+</kt-portlet>

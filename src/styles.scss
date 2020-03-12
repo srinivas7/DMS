@@ -1,0 +1,124 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~material-design-icons/iconfont/material-icons.css";
+@import "~highlight.js/styles/googlecode.css";
+
+// header base skins
+.kt-header-base-light {
+	@import "sass/global/layout/header/skins/base/light.scss";
+}
+.kt-header-base-dark {
+	@import "sass/global/layout/header/skins/base/dark.scss";
+}
+
+// header menu skins
+.kt-header-menu-light {
+	@import "sass/global/layout/header/skins/menu/light.scss";
+}
+.kt-header-menu-dark {
+	@import "sass/global/layout/header/skins/menu/dark.scss";
+}
+
+// brand skins
+.kt-brand-dark {
+	@import "sass/global/layout/brand/skins/dark.scss";
+}
+.kt-brand-light {
+	@import "sass/global/layout/brand/skins/light.scss";
+}
+
+// aside skins
+.kt-aside-dark {
+	@import "sass/global/layout/aside/skins/dark.scss";
+}
+.kt-aside-light {
+	@import "sass/global/layout/aside/skins/light.scss";
+}
+
+// hide bootstrap dropdown arrow globally
+.dropdown-toggle::after {
+	display: none !important;
+}
+
+.mat-table__wrapper--dashboard .mat-table {
+	min-width: 600px !important;
+	width: 100% !important;
+}
+
+.position-static {
+	position: static;
+}
+
+.kt-aside-dark .kt-aside-menu {
+    background-color: #fff !important;
+}
+#kt_aside_menu_wrapper {
+    background-color: #fff !important;
+}
+.kt-brand-dark .kt-aside__brand {
+    background-color: #fff;
+}
+.kt-aside__brand-logo {
+	a{
+		h2{
+			color: #1b7bf3 !important;
+		}
+	}
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover > .kt-menu__link {
+	background-color: #fff;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover > .kt-menu__heading .kt-menu__link-text, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover > .kt-menu__link .kt-menu__link-text {
+	color: #5d78ff;
+    font-weight: 600;
+}
+.kt-brand-dark .kt-aside__brand .kt-aside__brand-tools .kt-aside__brand-aside-toggler svg g [fill] {
+       fill: #3359c2;
+
+}
+#kt_aside {
+	-webkit-box-shadow: 6px 0px 10px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 0px 10px -4px rgba(0,0,0,0.75);
+     box-shadow: 6px 0px 10px -4px rgba(0,0,0,0.75);
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__heading .kt-menu__link-text, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item > .kt-menu__link .kt-menu__link-text {
+    color: #040404;
+    font-weight: 600;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--open > .kt-menu__heading, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--open > .kt-menu__link {
+    background-color: #fff;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--open > .kt-menu__heading .kt-menu__link-text, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--open > .kt-menu__link .kt-menu__link-text {
+    color: #000;
+}
+
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover > .kt-menu__heading .kt-menu__link-text, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover > .kt-menu__link .kt-menu__link-text {
+    color: #000000;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover > .kt-menu__heading, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item:not(.kt-menu__item--parent):not(.kt-menu__item--open):not(.kt-menu__item--here):not(.kt-menu__item--active):hover > .kt-menu__link {
+    background-color: #ffffff;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--active > .kt-menu__heading, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--active > .kt-menu__link {
+    background-color: #fff;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--here > .kt-menu__heading, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--here > .kt-menu__link {
+    background-color: #fff;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__heading, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--active > .kt-menu__link {
+	background-color: #fff;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--here > .kt-menu__heading, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--here > .kt-menu__link {
+	background-color: #fff;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--active > .kt-menu__heading .kt-menu__link-text, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--active > .kt-menu__link .kt-menu__link-text {
+    color: #000000;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--here > .kt-menu__heading .kt-menu__link-text, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item.kt-menu__item--here > .kt-menu__link .kt-menu__link-text {
+    color: #000000;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--open > .kt-menu__heading, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--open > .kt-menu__link {
+    background-color: #ffffff;
+}
+.kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--open > .kt-menu__heading .kt-menu__link-text, .kt-aside-dark .kt-aside-menu .kt-menu__nav > .kt-menu__item .kt-menu__submenu .kt-menu__item.kt-menu__item--open > .kt-menu__link .kt-menu__link-text {
+    color: #000000;
+}

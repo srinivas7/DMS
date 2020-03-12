@@ -1,0 +1,193 @@
+<!-- begin:: Page -->
+<ng-container *ngIf="selfLayout !== 'blank'; else blankLayout">
+	<!-- begin:: Header Mobile -->
+	<kt-header-mobile></kt-header-mobile>
+	<!-- end:: Header Mobile -->
+
+	<div class="kt-grid kt-grid--hor kt-grid--root">
+		<!-- begin::Body -->
+		<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+			<!-- begin:: Aside Left -->
+			<ng-container *ngIf="asideDisplay">
+				<button class="kt-aside-close" id="kt_aside_close_btn"><i class="la la-close"></i></button>
+				<kt-aside-left></kt-aside-left>
+			</ng-container>
+			<!-- end:: Aside Left -->
+
+			<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+				<!-- begin:: Header -->
+				<kt-header *ngIf="desktopHeaderDisplay"></kt-header>
+				<!-- end:: Header -->
+
+				<!-- begin:: Content -->
+				<div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content"
+					[ngClass]="{'kt-content--fit-top': fitTop}">
+					<!-- begin:: Content Head -->
+					<!--     <kt-subheader *ngIf="subheaderDisplay"></kt-subheader>     -->
+					<!-- end:: Content Head -->
+
+					<!-- begin:: Content Body -->
+					<div ktContentAnimate class="kt-container kt-grid__item kt-grid__item--fluid"
+						[ngClass]="{'kt-container--fluid': fluid}">
+						<router-outlet></router-outlet>
+					</div>
+					<!-- end:: Content Body -->
+				</div>
+				<!-- end:: Content -->
+
+				<!-- Start of ChartBot Code -->
+				<div>
+					<div id="chat-circle" class=" btn-raised">
+						<kt-portlet *ngIf="showBox">
+							<!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+							<kt-portlet-header [class]="'kt-portlet__head--lg'">
+								<!-- PORTLET LOADING | Binded to TABLE Datasource -->
+
+								<ng-container ktPortletTitle>
+									<h3 class="kt-portlet__head-title">
+										<span>Search Lead</span>
+									</h3>
+									<!-- For localisations we use @ngx-translate | See off. documentations => https://github.com/ngx-translate/core -->
+									<!-- Localization libraries (en/fr) are here => '../../../.././config/i18n/en.ts|fr.ts' -->
+								</ng-container>
+							</kt-portlet-header>
+							<!-- end::Header -->
+
+							<kt-portlet-body>
+								<form class="col-sm-7 mx-auto " [formGroup]="searchFormGroup">
+									<div class="form-row align-items-center" *ngIf="showSearch">
+										<div class="col-auto">
+											<label class="sr-only" for="inlineFormInput">Name</label>
+											<input type="text" class="form-control mb-2" id="inlineFormInput"
+												placeholder="Last Name" formControlName="name" />
+										</div>
+										<div class="col-auto">
+											<label class="sr-only" for="inlineFormInput">Mobile Number</label>
+											<input type="number" class="form-control mb-2" id="inlineFormInput"
+												placeholder="Mobile Number" formControlName="mobileNumber" />
+										</div>
+										<div class="col-auto">
+											<button type="submit" (click)="onSubmit()"
+												class="btn btn-primary mb-2">Search</button>
+										</div>
+									</div>
+									<div *ngIf="leads.length === 0 && isLoaded" class="form-row align-items-center">
+										<P>No data found with provided details</P>
+										<button (click)="createNew()" type="submit"
+											class="btn btn-primary mb-2">Create New</button>
+									</div>
+									<div *ngIf="leads.length === 0 && isLoaded" class="form-row align-items-center">
+										<button (click)="cancel()" type="submit"
+											class="btn btn-primary mb-2">Cancel</button>
+									</div>
+									<div> <span></span></div>
+								</form>
+							</kt-portlet-body>
+						</kt-portlet>
+						<svg (click)="showBox=!showBox" class="icon-search" viewBox="0 0 48 48">
+							<use xlink:href="#icon-search" />
+						</svg>
+					</div>
+
+					<div class="chatbot chatbot--closed ">
+						<div class="chatbot__header">
+							<p><strong>Heb je een vraag? <span class="u-text-highlight">Abbey helpt je.</span></strong>
+							</p>
+							<svg class="chatbot__close-button icon-speech" viewBox="0 0 32 32">
+								<use xlink:href="#icon-speech" />
+							</svg>
+							<svg class="chatbot__close-button icon-close" viewBox="0 0 32 32">
+								<use xlink:href="#icon-close" />
+							</svg>
+						</div>
+						<div class="chatbot__message-window">
+							<ul class="chatbot__messages">
+								<li class="is-ai animation">
+									<div class="is-ai__profile-picture">
+										<svg class="icon-avatar" viewBox="0 0 32 32">
+											<use xlink:href="#avatar" />
+										</svg>
+									</div>
+									<span class="chatbot__arrow chatbot__arrow--left"></span>
+									<p class='chatbot__message'>
+										Hoi, Ik ben Abbey. Ik help je met veelgestelde vragen.<br><br>Bijvoorbeeld:
+										Welke BK is vrij?</p>
+								</li>
+								<!-- Message here -->
+							</ul>
+						</div>
+						<div class="chatbot__entry chatbot--closed">
+							<input type="text" class="chatbot__input" placeholder="Hoe kan ik je helpen?" />
+							<svg class="chatbot__submit" viewBox="0 0 32 32">
+								<use xlink:href="#icon-send" />
+							</svg>
+						</div>
+					</div>
+
+					<!-- Symbols -->
+					<svg>
+						<!-- search icon -->
+						<symbol id="icon-search" viewBox="0 0 24 24">
+							<path
+								d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+							<path d="M0 0h24v24H0z" fill="none" />
+						</symbol>
+
+						<!-- Close icon -->
+						<symbol id="icon-close" viewBox="0 0 32 32">
+							<title>Close</title>
+							<path d="M2.624 8.297l2.963-2.963 23.704 23.704-2.963 2.963-23.704-23.704z" />
+							<path d="M2.624 29.037l23.704-23.704 2.963 2.963-23.704 23.704-2.963-2.963z" />
+						</symbol>
+
+						<!-- Speech icon -->
+						<symbol id="icon-speech" viewBox="0 0 32 32">
+							<title>Speech</title>
+							<path style="fill: #ffffff; fill-rule: evenodd;"
+								d="M21.795 5.333h-11.413c-0.038 0-0.077 0-0.114 0l-0.134 0.011v2.796c0.143-0.006 0.273-0.009 0.385-0.009h11.277c0.070 0 7.074 0.213 7.074 7.695 0 5.179-2.956 7.695-9.036 7.695h-3.792c-0.691 0-1.12 0.526-1.38 1.159l-1.387 3.093-1.625 3.77 0.245 0.453h2.56l2.538-5.678h2.837c7.633 0 11.84-3.727 11.84-10.494 0.001-8.564-7.313-10.492-9.875-10.492z" />
+							<path style="fill: #ffffff; fill-rule: evenodd;"
+								d="M10.912 24.259c-0.242-0.442-0.703-0.737-1.234-0.737-0 0-0 0-0 0h-0.56c-0.599-0.011-1.171-0.108-1.71-0.28l0.042 0.012c-1.82-0.559-4.427-2.26-4.427-7.424 0-6.683 5.024-7.597 7.109-7.686v-2.8c-2.042 0.095-9.91 1.067-9.91 10.483 0 4.832 1.961 7.367 3.606 8.64 1.38 1.067 3.109 1.744 4.991 1.843l0.033 0.019 2.805 5.211 1.41-3.273z" />
+						</symbol>
+
+						<!-- Send icon -->
+						<symbol id="icon-send" viewBox="0 0 23.97 21.9">
+							<title>Send</title>
+							<path d="M0.31,9.43a0.5,0.5,0,0,0,0,.93l8.3,3.23L23.15,0Z" />
+							<path d="M9,14.6H9V21.4a0.5,0.5,0,0,0,.93.25L13.22,16l6,3.32A0.5,0.5,0,0,0,20,19l4-18.4Z" />
+						</symbol>
+
+						<!-- Avatar icon -->
+						<symbol id="avatar" width="32" height="32" viewBox="0 0 32 32">
+							<title>Avatar</title>
+							<circle id="Oval" fill="#2F2E36" cx="16" cy="16" r="16"></circle>
+							<g id="Group" transform="translate(7.000000, 0.000000)" fill-rule="nonzero">
+								<g id="Shape">
+									<polygon fill="#FFFFFF"
+										points="3.60282353 19.0528302 7.91870588 19.0528302 7.91870588 16.5498113 3.60282353 16.5498113 3.60282353 14.6071698 8.36905882 14.6071698 6.79282353 11.88 0 11.88 0 23.76 9.57 23.76 9.57 21.0328302 3.60282353 21.0328302">
+									</polygon>
+									<polygon fill="#FFFFFF"
+										points="15.914717 11.88 13.8973585 15.7279245 11.88 11.88 7.92 11.88 12.0667925 19.0528302 12.0667925 23.76 15.6532075 23.76 15.6532075 19.0528302 19.8 11.88">
+									</polygon>
+									<polygon fill="#FFE600" points="23.43 0 0 8.58 23.43 4.43921739"></polygon>
+								</g>
+							</g>
+						</symbol>
+					</svg>
+				</div>
+				<!-- End of ChartBot Code -->
+
+				<kt-footer></kt-footer>
+			</div>
+		</div>
+		<!-- end:: Body -->
+
+		<kt-quick-panel></kt-quick-panel>
+		<kt-scroll-top></kt-scroll-top>
+		<!--   <kt-sticky-toolbar></kt-sticky-toolbar>    -->
+	</div>
+</ng-container>
+<!-- end:: Page -->
+
+<ng-template #blankLayout>
+	<router-outlet></router-outlet>
+</ng-template>

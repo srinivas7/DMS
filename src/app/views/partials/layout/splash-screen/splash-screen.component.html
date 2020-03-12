@@ -1,0 +1,8 @@
+<!-- splash screen -->
+<div #splashScreen class="kt-splash-screen">
+	<span *ngIf="loaderType === 'spinner-message'">{{loaderMessage}}</span>
+	<!--  <img *ngIf="loaderType === 'spinner-logo'" [attr.src]="loaderLogo" alt="Logo"> -->
+	<!-- <img *ngIf="loaderType === 'spinner-logo'" src="../../../../../assets/media/logos/Brand.png"> -->
+	<h2 style="color: white;">Auto-Mate</h2>
+	<mat-spinner diameter="40"></mat-spinner>
+</div>

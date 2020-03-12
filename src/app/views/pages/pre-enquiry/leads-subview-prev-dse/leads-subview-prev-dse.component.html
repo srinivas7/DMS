@@ -1,0 +1,24 @@
+<kt-portlet>
+    <kt-portlet-body>
+        <div class="container" *ngFor="let dse of prevDseData.dseCustomerMappings">
+            <div class="row">
+                <div class="col-6">
+                    <p><b>DSE Name :</b> {{ dse?.dscName }}</p>
+                    <p><b>Mobile Number :</b> {{ prevDseData?.mobileNumber }} </p>
+                    <button type="button" *ngIf="!(dse.status === 'inProgress' || dse.status === 'inactive')"
+                        (click)="allocatedDSE(prevDseData.customerId)" class="btn btn-primary ">Allocate DSE</button>
+                </div>
+                <div class="col">
+                    <img style="height: auto; width: 100px;"
+                        src="" alt="No Profile Pic">
+                </div>
+            </div><br><br>
+            <hr><br>
+        </div>
+        <div class="mat-table__bottom">
+            <button (click)="goBack()" mat-raised-button matTooltip="Back" color="primary" type="button">
+                <span>Back</span>
+            </button>
+        </div>
+    </kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,86 @@
+<kt-portlet>
+    <!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+    <kt-portlet-header [class]="'kt-portlet__head--lg'">
+        <!-- PORTLET LOADING | Binded to TABLE Datasource -->
+
+        <ng-container ktPortletTitle>
+            <h3 class="kt-portlet__head-title">
+                <span>Lead Profile</span>
+            </h3>
+            <!-- For localisations we use @ngx-translate | See off. documentations => https://github.com/ngx-translate/core -->
+            <!-- Localization libraries (en/fr) are here => '../../../.././config/i18n/en.ts|fr.ts' -->
+        </ng-container>
+
+        <ng-container ktPortletTools>
+            <div *ngIf="leadProfileData?.dseCustomerMappings?.length !== 0">
+                <button (click)="createEnquiry(leadProfileData.id)" mat-raised-button matTooltip="Create new"
+                    color="primary" type="button">
+                    <span>Create Enquiry</span>
+                </button>
+            </div>
+            <!-- Buttons (Material Angular) | See off.documenations 'https://material.angular.io/components/button/overview' -->
+            <!-- mat-raised-button | Rectangular contained button w/ elevation  -->
+        </ng-container>
+    </kt-portlet-header>
+    <!-- end::Header -->
+
+    <kt-portlet-body>
+
+        <div>
+            <p><b>Customer :</b> {{ leadProfileData?.firstName }}</p>
+            <p><b>Mobile :</b> {{ leadProfileData?.mobileNumber }} </p>
+        </div><br><br>
+
+        <div>
+            <p><b>Previous Enquiries</b></p>
+        </div>
+
+        <table id="tablePreview" class="table" style="margin-top:22px;" *ngIf="hasLoaded">
+
+            <thead>
+                <tr class="bg-secondary">
+                    <th>Enquiry No.</th>
+                    <th>Model</th>
+                    <th>Date of Enquiry</th>
+                    <th>Status</th>
+                    <th>Last Allocated DSE</th>
+                    <th>Source of Enquiry</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr (click)="getRowData(leadProfileData.id)">
+                    <th scope="row">{{leadProfileData.id}}</th>
+
+                    <td>{{leadProfileData?.enquiryDetails[0]?.model}}</td>
+                                        
+                    <td>{{leadProfileData?.creationDate | date : 'mediumDate'}}</td>
+
+                    <td>{{leadProfileData?.status}}</td>
+
+                    <div *ngIf="leadProfileData?.dseCustomerMappings?.length !== 0">
+                        <td><span *ngFor="let name of leadProfileData?.dseCustomerMappings">
+                                <li>{{name.dscName}}</li>
+                            </span>
+                        </td>
+                    </div>
+                    <div *ngIf="leadProfileData?.dseCustomerMappings?.length === 0">
+                        <td>
+                            <button (click)="allocatedDSE(leadProfileData.id)" mat-raised-button
+                                matTooltip="Allocate" color="primary" type="button">
+                                <span>Allocate DSE</span>
+                            </button>
+                        </td>
+                    </div>
+
+                    <td>{{leadProfileData?.enquiryDetails[0]?.source}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mat-table__bottom">
+            <button (click)="goBack()" mat-raised-button matTooltip="Back" color="primary" type="button">
+                <span>Back</span>
+            </button>
+        </div>
+    </kt-portlet-body>
+    <!-- end::Body -->
+</kt-portlet>

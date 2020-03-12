@@ -1,0 +1,60 @@
+<!--begin::Body-->
+<div class="kt-login__body">
+	<!--begin::Signin-->
+	<div class="kt-login__form">
+		<div class="kt-login__title">
+			<h3>Sign In</h3>
+		</div>
+
+		<kt-auth-notice></kt-auth-notice>
+
+		<!--begin::Form-->
+		<form class="kt-form" [formGroup]="loginForm" autocomplete="off">
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>Employee ID</mat-label>
+					<input matInput type="text" placeholder="Employee Name" formControlName="empname" autocomplete="off"/>
+					<mat-error *ngIf="isControlHasError('empname','required')">
+						<strong>Required Field</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('empname','minlength')">
+						<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('empname','maxlength')">
+						<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>{{ 'AUTH.INPUT.PASSWORD' | translate }}</mat-label>
+					<input matInput type="password" placeholder="{{ 'AUTH.INPUT.PASSWORD' | translate }}" formControlName="password" autocomplete="off"/>
+					<mat-error *ngIf="isControlHasError('password','required')">
+						<strong>{{ 'AUTH.VALIDATION.REQUIRED_FIELD' | translate }}</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('password','minlength')">
+						<strong>{{ 'AUTH.VALIDATION.MIN_LENGTH_FIELD' | translate }} 3</strong>
+					</mat-error>
+					<mat-error *ngIf="isControlHasError('password','maxlength')">
+						<strong>{{ 'AUTH.VALIDATION.MAX_LENGTH_FIELD' | translate }} 100</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<!-- <div class="form-group" *ngIf="isInValidCredentials">
+				<mat-error>Incorrect employee name and password </mat-error>
+			</div> -->
+			<!--begin::Action-->
+			<div class="kt-login__actions">
+				<a href="javascript:;" routerLink="/auth/forgot-password" class="kt-link kt-login__link-forgot">
+					{{ 'AUTH.GENERAL.FORGOT_BUTTON' | translate }}
+				</a>
+				<button (click)="submit()" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary">{{ 'AUTH.LOGIN.BUTTON' | translate }}</button>
+			</div>
+			<!--end::Action-->
+		</form>
+		<!--end::Form-->
+
+	</div>
+	<!--end::Signin-->
+</div>
+<!--end::Body-->

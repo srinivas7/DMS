@@ -1,0 +1,103 @@
+<div class="kt-portlet"
+	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+		</div>
+	</div>
+	<form class="kt-form" [formGroup]="vehicleForm">
+		<div class="kt-portlet__body">
+
+			<!-- <div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div> -->
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				Oh snap! Change a few things up and try submitting again.
+			</kt-alert>
+
+			<div class="form-group kt-form__group row">
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter Model" formControlName="model" />
+						<mat-error>Model is
+							<strong>required</strong>
+						</mat-error>
+						<mat-hint align="start">Please enter
+							<strong>Model</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<textarea matInput placeholder="Enter Features" formControlName="features"></textarea>
+						<mat-error>features is
+							<strong>required</strong>
+						</mat-error>
+						<mat-hint align="start">Please enter
+							<strong>Features</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="kt-separator kt-separator--dashed"></div>
+			<div class="form-group kt-form__group row">
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<label>E-Brouchers</label><br>
+					<input type="file" formControlName="EBroucher">
+					<!-- <mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Add E-Broucher" formControlName="EBroucher" />
+						<mat-error>E-Broucher is
+							<strong>required</strong>
+						</mat-error>
+						<mat-hint align="start">Please add
+							<strong>E-Broucher</strong>
+						</mat-hint>
+					</mat-form-field> -->
+				</div>
+			</div>
+			<div class="kt-separator kt-separator--dashed"></div>
+			<div class="form-group kt-form__group row">
+				<div class="col-lg kt-margin-bottom-20-mobile">
+					<label>Car Images</label><br>
+					<input type="file" formControlName="vehicle" multiple (change)="onFileSelected($event)"><br><br>
+					<img [src]="url" *ngFor="let url of localUrl" style="width: auto; height: 200px;"><br><br>
+					<!-- <mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Add Vehicle Image" formControlName="vehicle" />
+						<mat-error>Image is
+							<strong>required</strong>
+						</mat-error>
+						<mat-hint align="start">Please add
+							<strong>Images</strong>
+						</mat-hint>
+					</mat-form-field> -->
+				</div>
+				<!-- <div class="col-lg kt-margin-bottom-20-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Add Vehicle Image" formControlName="vehicle" />
+						<mat-error>Image is
+							<strong>required</strong>
+						</mat-error>
+						<mat-hint align="start">Please add
+							<strong>Images</strong>
+						</mat-hint>
+					</mat-form-field>
+				</div> -->
+			</div>
+		</div>
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+						<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+							Cancel
+						</button>&nbsp;
+						<button type="button" mat-raised-button color="primary" (click)="onSubmit()" matTooltip="Save changes">
+							Save
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

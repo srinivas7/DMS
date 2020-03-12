@@ -1,0 +1,31 @@
+<kt-portlet>
+	<!-- See prop => '../../_core/models/data-sources/_base.datasource.ts' (loading$) -->
+	<kt-portlet-header [class]="'kt-portlet__head--lg'">
+		<ng-container ktPortletTitle>
+			<h3 class="kt-portlet__head-title">
+				<span>Employee Role Mapping</span>
+			</h3>
+		</ng-container>
+	</kt-portlet-header>
+	<!-- end::Header -->
+
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+        <div *ngIf="!isLoading">
+			<p><b>Emp ID :</b> {{ selectedEmployee.empId }} </p>
+			<p><b>Emp Name :</b>  {{ selectedEmployee.empName }}</p>
+			<p><b>Emp Designation :</b>  {{ selectedEmployee.designation }}</p>
+			<p *ngIf="selectedEmployee.roleName !== null"><b>Emp Id :</b>  {{ selectedEmployee.roleId }}</p>
+			<p *ngIf="selectedEmployee.roleName !== null"><b>Emp Role :</b>  {{ selectedEmployee.roleName }}</p>
+		<br/>
+			<button *ngIf="selectedEmployee.roleName === null"  (click)="addRoleToEmployee()"  mat-raised-button matTooltip="Create New" color="primary" type="button">
+				<span>Add Role</span>
+			</button>
+			<button *ngIf="selectedEmployee.roleName !== null" (click)="removeRoleToEmployee(selectedEmployee.roleId)"  mat-raised-button matTooltip="Change Role" color="primary" type="button">
+				<span>Remove Role</span>
+			</button>
+		</div>
+		<div class="mat-table__message" *ngIf="isLoading">Please wait....</div>
+	</kt-portlet-body>
+
+</kt-portlet>

@@ -1,0 +1,40 @@
+<kt-portlet>
+    <kt-portlet-body>
+        <table id="tablePreview" class="table " style="margin-top:22px;" *ngIf="finalList?.length > 0">
+
+            <thead>
+                <tr class="bg-secondary">
+                    <th>Policy Id</th>
+                    <th>Policy Name</th>
+                    <th>Display Name</th>
+                    <th>Description</th>
+                    <th>url</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let policy of finalList">
+                    <th scope="row">{{policy.id}}</th>
+                    <td>{{policy.policyName}}</td>
+                    <td>{{policy.displayName}}</td>
+                    <td>{{policy.description}}</td>
+                    <td>{{policy?.api_url}}</td>
+                    <td>
+                        <button mat-icon-button *ngIf="policy.edit" color="primary" matTooltip="Edit Policy"
+                            (click)="editPolicy(policy)">
+                            <mat-icon>create</mat-icon>
+                        </button>
+
+                        <button mat-icon-button *ngIf="policy.delete" color="warn" matTooltip="Delete Policy" type="button"
+                            (click)="deletePolicy(policy.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </kt-portlet-body>
+    <!-- end::Body -->
+
+</kt-portlet>

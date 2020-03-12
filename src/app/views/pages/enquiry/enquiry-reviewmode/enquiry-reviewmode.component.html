@@ -1,0 +1,162 @@
+<kt-portlet>
+    <kt-portlet-body>
+        <!--begin: Wizard -->
+        <div #wizard class="kt-grid kt-wizard-v2 kt-wizard-v2--white" id="kt_wizard_v2">
+            <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v2__wrapper">
+                <!--begin: Wizard Overview-->
+                <div class="kt-form" id="kt_form" *ngIf="hasLoaded === true">
+                    <!--begin: Form Wizard Step 6-->
+                    <div class="kt-wizard-v2__content">
+                        <div class="kt-heading kt-heading--md">Details OverView</div>
+                        <div class="kt-form__section kt-form__section--first">
+                            <div class="kt-wizard-v2__review">
+                                <div class="kt-wizard-v2__review-item">
+                                    <div class="kt-wizard-v2__review-title">
+                                        Personal Intro
+                                    </div>
+                                    <div class="kt-wizard-v2__review-content">
+                                        FirstName: {{getLeadData?.firstName}}<br />
+                                        LastName: {{getLeadData?.lastName}}<br />
+                                        Gender: {{getLeadData?.gender}}<br />
+                                        Date Of Birth: {{getLeadData?.dateOfBirth}}<br />
+                                        Enquiry Segment: {{getLeadData?.enquiryDetails[0]?.enquirySegment}}<br />
+                                        Customer Type: {{getLeadData?.enquiryDetails[0]?.customerType}}<br />
+                                        Buyer Type: {{getLeadData?.enquiryDetails[0]?.buyerType}}<br />
+                                        Expected Delivery Date:
+                                        {{getLeadData?.enquiryDetails[0]?.expected_delivery_date | date : 'mediumDate'}}<br />
+                                        Referred FirstName: {{getLeadData?.referedByFirstName}}<br />
+                                        Referred LastName: {{getLeadData?.referedByLastName}}<br />
+                                        Referred Mobile: {{getLeadData?.referedByLastName}}<br />
+                                        Referred Source: {{getLeadData?.refferedSource}}<br />
+                                        Referred Source Location: {{getLeadData?.refferedSourceLocation}}
+                                    </div>
+                                </div>
+                                <div class="kt-wizard-v2__review-item"
+                                    *ngIf="getLeadData.communicationDetails.length !== 0">
+                                    <div class="kt-wizard-v2__review-title">
+                                        Communication Details
+                                    </div>
+                                    <div class="kt-wizard-v2__review-content">
+                                        Mobile Number: {{getLeadData?.mobileNumber}}<br />
+                                        Alternate Mobile Number: {{getLeadData?.alternateNumber}}<br />
+                                        Email ID: {{getLeadData?.email}}<br />
+                                        <b>Current Address</b><br />
+                                        Addressline1: {{getLeadData?.communicationDetails[0]?.addressline1}}<br />
+                                        Addressline2: {{getLeadData?.communicationDetails[0]?.addressline2}}<br />
+                                        village/Town: {{getLeadData?.communicationDetails[0]?.village}}<br />
+                                        City: {{getLeadData?.communicationDetails[0]?.city}}<br />
+                                        District: {{getLeadData?.communicationDetails[0]?.district}}<br />
+                                        State: {{getLeadData?.communicationDetails[0]?.state}}<br />
+                                        Pincode: {{getLeadData?.communicationDetails[0]?.pincode}}<br />
+                                        <b>Permanent Address</b><br />
+                                        Addressline1: {{getLeadData?.communicationDetails[1]?.addressline1}}<br />
+                                        Addressline2: {{getLeadData?.communicationDetails[1]?.addressline2}}<br />
+                                        village/Town: {{getLeadData?.communicationDetails[1]?.village}}<br />
+                                        City: {{getLeadData?.communicationDetails[1]?.city}}<br />
+                                        District: {{getLeadData?.communicationDetails[1]?.district}}<br />
+                                        State: {{getLeadData?.communicationDetails[1]?.state}}<br />
+                                        Pincode: {{getLeadData?.communicationDetails[1]?.pincode}}<br />
+                                    </div>
+                                </div>
+                                <div class="kt-wizard-v2__review-item"
+                                    *ngIf="getLeadData.customerDocuments.length !== 0">
+                                    <div class="kt-wizard-v2__review-title">
+                                        Customer Documents
+                                    </div>
+                                    <div class="kt-wizard-v2__review-content">
+                                        <div *ngFor="let item of getLeadData.customerDocuments"><span style="text-transform: capitalize;">{{item.documentType}}</span>: {{item.fileName}}</div><br />
+                                    </div>
+                                </div>
+                                <div class="kt-wizard-v2__review-item" *ngIf="getLeadData.vehicleInfos.length !== 0">
+                                    <div class="kt-wizard-v2__review-title">
+                                        Model Selection
+                                    </div>
+                                    <div class="kt-wizard-v2__review-content">
+                                        Model: {{getLeadData?.vehicleInfos[0]?.model}}<br />
+                                        Variant: {{getLeadData?.vehicleInfos[0]?.variant}}<br />
+                                        Color: {{getLeadData?.vehicleInfos[0]?.color}}<br />
+                                        Fuel: {{getLeadData?.vehicleInfos[0]?.fuel}}<br />
+                                        Transmission Type: {{getLeadData?.vehicleInfos[0]?.transmissionType}}<br />
+                                    </div>
+                                </div>
+                                <div class="kt-wizard-v2__review-item" *ngIf="getLeadData.buyerTypes.length !== 0">
+                                    <div class="kt-wizard-v2__review-title">
+                                        Exchange Details
+                                    </div>
+                                    <div class="kt-wizard-v2__review-content">
+                                        buyerType: {{getLeadData?.buyerTypes[0]?.buyerType}}<br />
+                                        <div *ngIf="getLeadData?.buyerTypes[0]?.buyerType === 'Additional Buyer'">regNo:
+                                            {{getLeadData?.buyerTypes[0]?.regNo}}<br /></div>
+                                        brand: {{getLeadData?.buyerTypes[0]?.brand}}<br />
+                                        model: {{getLeadData?.buyerTypes[0]?.model}}<br />
+                                        color: {{getLeadData?.buyerTypes[0]?.color}}<br />
+                                        Variant: {{getLeadData?.buyerTypes[0]?.varient}}<br />
+                                        <div *ngIf="getLeadData?.buyerTypes[0]?.buyerType === 'Replacement Buyer'">
+                                            fuelType: {{getLeadData?.buyerTypes[0]?.fuelType}}<br />
+                                            kiloMeters: {{getLeadData?.buyerTypes[0]?.kiloMeters}}<br />
+                                            hypothication: {{getLeadData?.buyerTypes[0]?.hypothication}}<br />
+                                            loanAmountDue: {{getLeadData?.buyerTypes[0]?.loanAmountDue}}<br />
+                                            challansPending: {{getLeadData?.buyerTypes[0]?.challansPending}}<br />
+                                            nocClearanceExpenses:
+                                            {{getLeadData?.buyerTypes[0]?.nocClearanceExpenses}}<br />
+                                            otherExpenses: {{getLeadData?.buyerTypes[0]?.otherExpenses}}<br />
+                                            transmission: {{getLeadData?.buyerTypes[0]?.transmission}}<br />
+                                            yearOfManufacture: {{getLeadData?.buyerTypes[0]?.yearOfManufacture}}<br />
+                                            insuranceExpiryDate:
+                                            {{getLeadData?.buyerTypes[0]?.insuranceExpiryDate}}<br />
+                                            hypothicationBranch:
+                                            {{getLeadData?.buyerTypes[0]?.hypothicationBranch}}<br />
+                                            noofOwners: {{getLeadData?.buyerTypes[0]?.noofOwners}}<br />
+                                            challansAmount: {{getLeadData?.buyerTypes[0]?.challansAmount}}<br />
+                                            ccClearanceExpenses:
+                                            {{getLeadData?.buyerTypes[0]?.ccClearanceExpenses}}<br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kt-wizard-v2__review-item" *ngIf="getLeadData.financeDetails.length !== 0">
+                                    <div class="kt-wizard-v2__review-title">
+                                        Finance Details
+                                    </div>
+                                    <div class="kt-wizard-v2__review-content">
+                                        DownPayment: {{getLeadData?.financeDetails[0]?.downPayment}}<br />
+                                        loanAmount: {{getLeadData?.financeDetails[0]?.loanAmount}}<br />
+                                        financeCompany: {{getLeadData?.financeDetails[0]?.financeCompany}}<br />
+                                        expectedTenureYears:
+                                        {{getLeadData?.financeDetails[0]?.expectedTenureYears}}<br />
+                                        annualIncome: {{getLeadData?.financeDetails[0]?.annualIncome}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end: Wizard-->
+
+                    <!--begin: Actions -->
+                    <div class="kt-form__actions">
+                        <div (click)="goBack()"
+                            class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                            Back
+                        </div>
+                        <div *ngIf="this.getLeadData.dseCustomerMappings.length > 0">
+                            <div (click)="proceedToEdit()"
+                                class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                Edit
+                            </div>
+                        </div>
+                        <div *ngIf="getLeadData.status === 'Enquiry'">
+                            <div class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                Drop
+                            </div>&nbsp;&nbsp;&nbsp;
+                            <div class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u">
+                                Proceed To Booking
+                            </div>
+                        </div>
+                    </div>
+                    <!--end: Actions -->
+                </div>
+                <!--end: Wizard-->
+            </div>
+        </div>
+        <!--end: Wizard -->
+    </kt-portlet-body>
+</kt-portlet>
